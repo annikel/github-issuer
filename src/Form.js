@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios"; 
 
-
 class GitHubIssuerForm extends Component {
   state = {
     title: '',
@@ -11,12 +10,12 @@ class GitHubIssuerForm extends Component {
 handleSubmit = event => {
     event.preventDefault();
     const issue = {
-      'title': this.state.title,
-      'body': this.state.body
+      title: this.state.title,
+      body: this.state.body
     }
     console.log(issue);
 
-    axios.post('/api/repos/annikel/github-issuer/issues', { issue })
+    axios.post('/api/repos/annikel/github-issuer/issues', issue)
       .then(res=>{
         console.log(res);
         console.log(res.data);
