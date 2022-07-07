@@ -15,7 +15,7 @@ handleSubmit = event => {
     }
     console.log(issue);
 
-    axios.post('/api/repos/annikel/github-issuer/issues', issue)
+    axios.post('/api/repos/annikel/github-issuer/issues', { issue })
       .then(res=>{
         console.log(res);
         console.log(res.data);
@@ -29,13 +29,9 @@ render() {
     return (
       <div>
         <form onSubmit = { this.handleSubmit }>
-          <label> Issue Title:
-            <input type = "text" name = "title" onChange= {this.handleChange}/>
-          </label>
-          <label> Issue Description:
-            <input type = "text" name = "description" onChange= {this.handleChange}/>
-          </label>
-          <button type = "submit"> Add </button>
+        <input placeholder="Title" type = "text" name = "title" onChange= {this.handleChange}/>
+        <input placeholder="Description" type = "text" name = "description" onChange= {this.handleChange}/>
+          <button type = "submit"> Post to GitHub </button>
         </form>
     </div>
     );
