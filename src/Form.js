@@ -30,7 +30,7 @@ const GitHubIssuerForm = () => {
       body: body,
     };
     axios
-      .post("/api/repos/annikel/github-issuer/issues", { issue })
+      .post("/api/repos/annikel/github-issuer/issues", issue)
       .then((res) => {
         console.log(res);
         console.log(res.data);
