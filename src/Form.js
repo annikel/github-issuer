@@ -1,41 +1,65 @@
-import React, { Component } from 'react';
-import axios from "axios"; 
+import React from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
-class GitHubIssuerForm extends Component {
-  state = {
-    title: '',
-    body: ''
-  };
+const GitHubIssuerForm = () => {
+  const [title, setTitle] = useState();
+  const [body, setBody] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
 
-handleSubmit = event => {
-    event.preventDefault();
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const response = await fetch("/.auth/me");
+      const payload = await response.json();
+      const { clientPrincipal } = payload;
+      return clientPrincipal;
+    };
+    fetchCurrentUser()
+      .then((response) => {
+        if (response !== null) {
+          setLoggedIn(true);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleSubmit = () => {
     const issue = {
-      title: this.state.title,
-      body: this.state.body
-    }
-    console.log(issue);
-
-    axios.post('/api/repos/annikel/github-issuer/issues', { issue })
-      .then(res=>{
+      title: title,
+      body: body,
+    };
+    axios
+      .post("/api/repos/annikel/github-issuer/issues", { issue })
+      .then((res) => {
         console.log(res);
         console.log(res.data);
-      })
-  }
-handleChange = event =>{
-    this.setState({ title: event.target.value});
-    this.setState({ body: event.target.value});
-  }
-render() {
-    return (
-      <div>
-        <form onSubmit = { this.handleSubmit }>
-        <input placeholder="Title" type = "text" name = "title" onChange= {this.handleChange}/>
-        <input placeholder="Description" type = "text" name = "description" onChange= {this.handleChange}/>
-          <button type = "submit"> Post to GitHub </button>
-        </form>
+      });
+  };
+
+  return (
+    <div className="wrapper">
+      {loggedIn ? (
+        <>
+          <input
+            placeholder="Title"
+            type="text"
+            name="title"
+            onChange={(event) => setTitle(event.target.value)}
+          />
+          <input
+            placeholder="Description"
+            type="text"
+            name="description"
+            onChange={(event) => setBody(event.target.value)}
+          />
+          <button onClick={handleSubmit}>Post to GitHub</button>
+        </>
+      ) : (
+        <a href="/.auth/login/aad">Login to GitHub</a>
+      )}
     </div>
-    );
-  }
-}
+  );
+};
 
 export default GitHubIssuerForm;
