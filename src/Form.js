@@ -17,7 +17,7 @@ const GitHubIssuerForm = () => {
     };
     fetchCurrentUser()
       .then((response) => {
-        if (response !== null) {
+        if (response !== null && response !== undefined) {
           setLoggedIn(true);
         }
       })
