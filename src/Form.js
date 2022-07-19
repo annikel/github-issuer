@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const GitHubIssuerForm = () => {
-  const [title, setTitle] = useState();
-  const [body, setBody] = useState();
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
   const [sent, setSent] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -33,7 +33,6 @@ const GitHubIssuerForm = () => {
     axios
       .post("/api/repos/annikel/github-issuer/issues", issue)
       .then((res) => {
-        setTitle("");
         setBody("");
         setSent(true);
         console.log(res);
@@ -57,11 +56,11 @@ const GitHubIssuerForm = () => {
             name="description"
             onChange={(event) => setBody(event.target.value)}
           />
-          <button onClick={handleSubmit}>{sent ? "Post Again" : "Post to GitHub"}</button>  
+          <button onClick={handleSubmit}>{sent ? "Post Again to GitHub" : "Post to GitHub"}</button>  
           <a href="https://github.com/annikel/github-issuer/issues">View Issues</a>     
         </>
       ) : (
-        <a href="/.auth/login/aad">Login to GitHub</a>
+        <a href="/.auth/login/aad">Login with Azure Active Directory</a>
       )}
     </div>
   );
