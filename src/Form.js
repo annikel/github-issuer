@@ -43,7 +43,7 @@ const GitHubIssuerForm = () => {
 
   return (
     <div className="wrapper">
-      {true ? (
+      {loggedIn ? (
         <>
           <input
             placeholder="Title"
@@ -57,7 +57,8 @@ const GitHubIssuerForm = () => {
             name="description"
             onChange={(event) => setBody(event.target.value)}
           />
-          <button onClick={handleSubmit}>{sent ? "Post Again" : "Post to GitHub"}</button>       
+          <button onClick={handleSubmit}>{sent ? "Post Again" : "Post to GitHub"}</button>  
+          <a href="https://github.com/annikel/github-issuer/issues">View Issues</a>     
         </>
       ) : (
         <a href="/.auth/login/aad">Login to GitHub</a>

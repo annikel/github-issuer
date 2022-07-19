@@ -25,8 +25,8 @@ input[type="text"]:focus {
   border: 1px solid gray;
 }
 
-button,
-a {
+button
+{
   padding: 16px 32px;
   border: none;
   border-radius: 12px;
@@ -35,4 +35,19 @@ a {
   cursor: pointer;
   font-weight: 600;
   text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+}
+
+
+a {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 12px;
+  color: black;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
 }
