@@ -6,6 +6,7 @@ import { useEffect } from "react";
 const GitHubIssuerForm = () => {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
+  const [sent, setSent] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -32,6 +33,9 @@ const GitHubIssuerForm = () => {
     axios
       .post("/api/repos/annikel/github-issuer/issues", issue)
       .then((res) => {
+        setTitle("");
+        setBody("");
+        setSent(true);
         console.log(res);
         console.log(res.data);
       });
@@ -39,7 +43,7 @@ const GitHubIssuerForm = () => {
 
   return (
     <div className="wrapper">
-      {loggedIn ? (
+      {true ? (
         <>
           <input
             placeholder="Title"
@@ -53,7 +57,7 @@ const GitHubIssuerForm = () => {
             name="description"
             onChange={(event) => setBody(event.target.value)}
           />
-          <button onClick={handleSubmit}>Post to GitHub</button>
+          <button onClick={handleSubmit}>{sent ? "Post Again" : "Post to GitHub"}</button>       
         </>
       ) : (
         <a href="/.auth/login/aad">Login to GitHub</a>
