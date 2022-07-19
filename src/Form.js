@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const GitHubIssuerForm = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [sent, setSent] = useState();
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [sent, setSent] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -30,37 +30,43 @@ const GitHubIssuerForm = () => {
       title: title,
       body: body,
     };
-    axios
-      .post("/api/repos/annikel/github-issuer/issues", issue)
-      .then((res) => {
-        setBody("");
-        setSent(true);
-        console.log(res);
-        console.log(res.data);
-      });
+    axios.post("/api/repos/annikel/github-issuer/issues", issue).then((res) => {
+      setBody("");
+      setTitle("");
+      setSent(true);
+    });
   };
 
   return (
     <div className="wrapper">
       {loggedIn ? (
         <>
+          <div className="successMessage">{sent ? "Successfully sent to backend :)" : ""}</div>
           <input
             placeholder="Title"
             type="text"
             name="title"
             onChange={(event) => setTitle(event.target.value)}
+            value={title}
           />
           <input
             placeholder="Description"
             type="text"
             name="description"
             onChange={(event) => setBody(event.target.value)}
+            value={body}
           />
-          <button onClick={handleSubmit}>{sent ? "Post Again to GitHub" : "Post to GitHub"}</button>  
-          <a href="https://github.com/annikel/github-issuer/issues">View Issues</a>     
+          <button className="blueButton" onClick={handleSubmit}>
+            Post to GitHub
+          </button>
+          <a href="https://github.com/annikel/github-issuer/issues">
+            View Issues >>
+          </a>
         </>
       ) : (
-        <a href="/.auth/login/aad">Login with Azure Active Directory</a>
+        <a className="blueButton" href="/.auth/login/aad">
+          Login with Azure Active Directory
+        </a>
       )}
     </div>
   );
